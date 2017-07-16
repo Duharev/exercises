@@ -1,0 +1,110 @@
+Сортировка четных чисел из файла
+
+1. Ввести имя файла с консоли.
+2. Прочитать из него набор чисел.
+3. Вывести на консоль только четные, отсортированные по возрастанию.
+
+
+package com.javarush.task.task13.task1326;
+
+/* 
+Сортировка четных чисел из файла
+*/
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Solution  {
+    public static void main(String[] args) throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String name = reader.readLine();
+//        String name="C:\\file.txt";
+//
+//        BufferedReader readerFile = new BufferedReader(new FileReader(name));
+
+        InputStream inputStream = new BufferedInputStream( new FileInputStream(name));
+
+        List<String> dataS = new ArrayList<>();
+        List<Integer> data = new ArrayList<>();
+        String string="";
+        int num;
+
+        while (inputStream.available()>0){
+            char c = (char) inputStream.read();
+//            System.out.print(c);
+
+            if(c!=10){
+                string +=c;
+            } else {
+                dataS.add(string);
+//                System.out.println(" добавлено-"+string);
+                string="";
+
+            }
+//            System.out.println("  строка-"+string);
+        }
+
+        inputStream.close();
+
+        for (String st: dataS) {
+            try {
+//                System.out.println("st-"+st);
+                num=Integer.parseInt(st.trim());
+//                System.out.println("st-"+st+ "    num-"+num);
+
+                if(/*(num>0)&&*/(num%2==0)) data.add(num);
+            } catch (Exception  e){
+
+            }
+
+        }
+
+
+
+
+ /*
+
+        List<Integer> data = new ArrayList<>();
+        String string;
+        int num;
+
+        while ((((string = readerFile.readLine())!=null))){
+            try {
+                num=Integer.parseInt(string);
+                if((num>0)&&(num%2==0)) data.add(num);
+            } catch (Exception  e){
+
+            }
+
+
+        }
+        readerFile.close();
+*/
+//        for (int a : data) System.out.print(a+" ");
+//        System.out.println();
+//        System.out.println("-------");
+
+        Boolean sort=true;
+        int temp, m = data.size()-1;
+
+        while (sort){
+            sort=false;
+
+//            for (int a : data) System.out.print(a+" ");
+//            System.out.println("---------");
+
+            for (int i = 0; i < m; i++) {
+                if (data.get(i) > data.get(i+1)){
+                    temp = data.get(i);
+                    data.set(i,data.get(i+1));
+                    data.set(i+1,temp);
+                    sort=true;
+                }
+            }
+            m--;
+        }
+        for (int a : data) System.out.println(a);
+        // напишите тут ваш код
+    }
+}
